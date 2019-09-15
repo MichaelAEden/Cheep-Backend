@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-
 from flask_jsontools import JsonSerializableBase
 
 Base = declarative_base(cls=(JsonSerializableBase,))
