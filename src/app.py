@@ -4,6 +4,9 @@ from flask import Flask, send_from_directory
 
 from route.grocery import grocery_blueprint
 from route.user import user_blueprint
+from route.grocery_list import grocery_list_blueprint
+from route.grocery_list_item import grocery_list_item_blueprint
+
 
 app = Flask(__name__, static_folder=os.environ['REACT_APP_BUILD'])
 
