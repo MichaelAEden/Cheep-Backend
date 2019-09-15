@@ -5,23 +5,22 @@ from models.grocery import Grocery
 
 grocery_blueprint = Blueprint("grocery", __name__)
 
-#grabs groceries from SQL database
 @grocery_blueprint.route('/', methods=['GET', 'POST'])
 def groceries():
-	if request.method == 'POST':
+	if request.method == 'POST': #makes new grocery
 		grocery = Grocery.from_json(request.json)
 		session = Session()
 		session.add(grocery)
 		session.commit()
 		return grocery.__json__()
-	elif request.method == 'GET':
+	elif request.method == 'GET': #grabs groceries from SQL database, from start to start+count
 		session = Session()
 		start = request.json['start']
 		stop = start + request.json['count']
 		result = session.query(Grocery).order_by(Grocery.grocery_id)[start:stop]
 		return { 'groceries': [grocery.__json__() for grocery in result ] }
 
-#when you click into a specific grocery
+#when you click into a specific grocery, grabs by id
 @grocery_blueprint.route('/<grocery_id>', methods=['GET'])
 def grocery(grocery_id):
 	if request.method == 'GET':

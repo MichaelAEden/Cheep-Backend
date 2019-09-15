@@ -22,7 +22,7 @@ def users():
 		return user.__json__()
 
 
-@user_blueprint.route('/<user_id>/list', methods=['GET', 'POST', 'DELETE'])
+@user_blueprint.route('/<user_id>/list', methods=['GET', 'POST'])
 def user_lists(user_id):
 	if request.method == 'GET':
 		session = Session()
@@ -44,13 +44,6 @@ def user_lists(user_id):
 		session.add(grocery_list)
 		session.commit()
 		return grocery_list.__json__()
-	elif request.method == 'DELETE':
-		grocery_list = GroceryList(user_id=user_id, name=request.json['name'])
-		session = Session()
-		session.delete(grocery_list)
-		session.commit()
-		return grocery_list.__json__()
-
 
 # Note inclusion of user_id, although list_id is enough to identify the list.
 @user_blueprint.route('/<user_id>/list/<list_id>', methods=['GET', 'POST'])
