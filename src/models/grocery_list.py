@@ -13,7 +13,7 @@ class GroceryList(Base):
 
     def __repr__(self):
         return "<GroceryList(id='%d', user_id='%d', name='%s')>" % (
-        	self.grocery_list_id, self.user_id, self.name)
+        	self.grocery_list_id, self.user_id, self .name)
 
     @classmethod
     def from_json(cls, json):

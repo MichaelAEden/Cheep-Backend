@@ -5,7 +5,6 @@ from models.grocery_list import GroceryList
 
 grocery_list_blueprint = Blueprint("grocery_list", __name__)
 
-
 @grocery_list_blueprint.route('/<grocery_list_id>', methods=['GET'])
 def grocery_list(grocery_list_id):
 	if request.method == 'GET':
@@ -16,8 +15,8 @@ def grocery_list(grocery_list_id):
 		else:
 			return result.__json__()
 
-
-@user_blueprint.route('/<user_id>/list/<list_id>', methods=['GET'])
+#TODO: should this be @grocery_list?
+@grocery_list_blueprint.route('/<user_id>/list/<list_id>', methods=['GET'])
 def user_list(user_id, list_id):
 	if request.method == 'GET':
 		result = session.query(GroceryList).filter_by(user_id=user_id, list_id=list_id).first()

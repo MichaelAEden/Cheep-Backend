@@ -10,6 +10,8 @@ app = Flask(__name__, static_folder=os.environ['REACT_APP_BUILD'])
 # Register API routes
 app.register_blueprint(grocery_blueprint, url_prefix="/api/grocery")
 app.register_blueprint(user_blueprint, url_prefix="/api/user")
+app.register_blueprint(grocery_list_blueprint, url_prefix="/api/grocery_list")
+app.register_blueprint(grocery_list_item_blueprint, url_prefix="/api/grocery_list_item")
 
 # Serve React App
 @app.route('/', defaults={'path': ''})

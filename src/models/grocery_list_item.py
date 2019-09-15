@@ -1,13 +1,14 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from flask_jsontools import JsonSerializableBase
 
-Base = declarative_base()
+Base = declarative_base(cls=(JsonSerializableBase,))
 
 class GroceryListItem(Base):
     __tablename__ = 'grocery_list_item'
 
     grocery_list_item_id = Column(Integer, primary_key=True)
-    grocery_list_id = Column(Integer, primary_key=True)
+    grocery_list_id = Column(Integer) #, primary_key=True)
     grocery_id = Column(Integer)
 
     def __repr__(self):
