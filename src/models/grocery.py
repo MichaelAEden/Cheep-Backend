@@ -11,11 +11,12 @@ class Grocery(Base):
     grocery_id = Column(Integer, primary_key=True)
     name = Column(String)
     price = Column(Integer)
+    image = Column(String)
 
     def __repr__(self):
-        return "<Grocery(id='%d', name='%s', price='%d')>" % (
-            self.grocery_id, self.name, self.price)
+        return "<Grocery(id='%d', name='%s', price='%d', image='%s')>" % (
+            self.grocery_id, self.name, self.price, self.image)
 
     @classmethod
     def from_json(cls, json):
-        return cls(name=json['name'], price=json['price'])
+        return cls(name=json['name'], price=json['price'], image=json['image'])
