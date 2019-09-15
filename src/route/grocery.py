@@ -30,3 +30,14 @@ def grocery(grocery_id):
 			return ('Grocery not found.', 404)
 		else:
 			return result.__json__()
+
+#enables search by grocery name
+@grocery_blueprint.route('/search/<grocery_name>', methods=['GET'])
+def search(grocery_name):
+	if request.method == 'GET':
+		session = Session()
+		result = session.query(Grocery).filter_by(name=grocery_name).first()
+		if result is None:
+			return ('Grocery not found.', 404)
+		else:
+			return result.__json__()
