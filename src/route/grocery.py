@@ -13,7 +13,7 @@ def groceries():
 		session.add(grocery)
 		session.commit()
 		return grocery.__json__()
-	elif request.method == 'GET': #grabs groceries from SQL database, from start to start+count
+	elif request.method == 'GET': #grabs all groceries from SQL database
 		session = Session()
 		result = session.query(Grocery).order_by(Grocery.grocery_id).all()
 		return { 'groceries': [grocery.__json__() for grocery in result ] }

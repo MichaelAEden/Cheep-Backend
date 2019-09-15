@@ -24,7 +24,7 @@ def users():
 
 @user_blueprint.route('/<user_id>/list', methods=['GET', 'POST'])
 def user_lists(user_id):
-	if request.method == 'GET':
+	if request.method == 'GET': #Retrieves all of a user's lists
 		session = Session()
 		result = session.query(GroceryList).filter_by(user_id=user_id).all()
 		response = []
@@ -38,7 +38,7 @@ def user_lists(user_id):
 			json['grocery_list_items_preview'] = grocery_list_items_preview
 			response.append(json)
 		return { 'grocery_lists': response }
-	elif request.method == 'POST':
+	elif request.method == 'POST': #Creates a new list for the user
 		grocery_list = GroceryList(user_id=user_id, name=request.json['name'])
 		session = Session()
 		session.add(grocery_list)
@@ -46,13 +46,18 @@ def user_lists(user_id):
 		return grocery_list.__json__()
 
 # Note inclusion of user_id, although list_id is enough to identify the list.
+# TODO: handle error when user_id and list_id conflict
 @user_blueprint.route('/<user_id>/list/<list_id>', methods=['GET', 'POST'])
 def user_list(user_id, list_id):
-	if request.method == 'GET':
+	if request.method == 'GET': #Grabs all items from a user's grocery list
 		session = Session()
-		result = session.query(GroceryListItem).filter_by(grocery_list_id=list_id).all()
-	elif request.method == 'POST':
-		grocery_list_item = GroceryListItem.from_json(grocery_list_id=list_id, grocery_id=request.json)
+		result = session.query(GroceryListItem).filter_by(grocery_list_id=list_id).order_by(GroceryListItem.grocery_list_item_id).all()
+		if result is None:
+			return ('Grocery not found.', 404)
+		else:
+			return { 'grocery_items': [grocery_list_item.__json__() for grocery_list_item in result ] }
+	elif request.method == 'POST': #Adds an item to a user's grocery list
+		grocery_list_item = GroceryListItem(grocery_list_id=list_id, grocery_id=request.json['grocery_id'])
 		session = Session()
 		session.add(grocery_list_item)
 		session.commit()

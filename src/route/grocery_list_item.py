@@ -16,6 +16,7 @@ def grocery_list_items():
 		return grocery_list_item.__json__()
 
 #Gets grocery_list_item by id, delete by id
+#TODO: might be good to move to user.py
 @grocery_list_item_blueprint.route('/<grocery_list_item_id>', methods=['GET', 'DELETE'])
 def grocery_list_item(grocery_list_item_id):
 	if request.method == 'GET':
