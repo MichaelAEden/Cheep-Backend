@@ -15,9 +15,7 @@ def groceries():
 		return grocery.__json__()
 	elif request.method == 'GET': #grabs groceries from SQL database, from start to start+count
 		session = Session()
-		start = request.json['start']
-		stop = start + request.json['count']
-		result = session.query(Grocery).order_by(Grocery.grocery_id)[start:stop]
+		result = session.query(Grocery).order_by(Grocery.grocery_id).all()
 		return { 'groceries': [grocery.__json__() for grocery in result ] }
 
 #when you click into a specific grocery, grabs by id
