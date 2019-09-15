@@ -16,7 +16,10 @@ def groceries():
 		return grocery.__json__()
 	elif request.method == 'GET':
 		session = Session()
-		return { 'data': [grocery.__json__() for grocery in session.query(Grocery).all()] }
+		start = request.json['start']
+		stop = start + request.json['count']
+		result = session.query(Grocery).order_by(Grocery.grocery_id)[start:stop]
+		return { 'groceries': [grocery.__json__() for grocery in result ] }
 
 
 @grocery_blueprint.route('/<grocery_id>', methods=['GET'])
