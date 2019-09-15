@@ -2,3 +2,5 @@
 *.pyc
 
 cheep-virtualenv/*
+
+__pycache__/*
