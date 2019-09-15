@@ -3,11 +3,13 @@ import os
 from flask import Flask, send_from_directory
 
 from route.grocery import grocery_blueprint
+from route.user import user_blueprint
 
 app = Flask(__name__, static_folder=os.environ['REACT_APP_BUILD'])
 
 # Register API routes
 app.register_blueprint(grocery_blueprint, url_prefix="/api/grocery")
+app.register_blueprint(user_blueprint, url_prefix="/api/user")
 
 # Serve React App
 @app.route('/', defaults={'path': ''})
